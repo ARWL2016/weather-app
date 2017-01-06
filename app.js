@@ -15,22 +15,22 @@ const argv = yargs
     .alias('help', 'h')
     .argv; 
 
-// geocode.geocodeAddress(argv.address, (errorMessage, results) => {
-//     if (errorMessage) {
-//         console.log(errorMessage);
-//     } else {
-//         console.log(JSON.stringify(results, undefined, 2));
-//     }
-// }); 
-
-
-weather.getWeather(39.9396284, -75.18663959999999, (errorMessage, weatherResults) => {
+geocode.geocodeAddress(argv.address, (errorMessage, results) => {
     if (errorMessage) {
-        console.log(errorMessage); 
+        console.log(errorMessage);
     } else {
-        console.log(`The temperature is ${weatherResults.temperature} but it feels like ${weatherResults.apparentTemperature}.`); 
-        console.log(JSON.stringify(weatherResults, undefined, 2));
-    }
-} ); 
+        console.log(results.address);
+        weather.getWeather(results.latitude, results.longitude, (errorMessage, weatherResults) => {
+            if (errorMessage) {
+                console.log(errorMessage); 
+            } else {
+                console.log(`The temperature is ${weatherResults.temperature} but it feels like ${weatherResults.apparentTemperature}.`); 
+                
+            }
+        }); 
+            }
+}); 
 
-// 12.00
+
+
+
